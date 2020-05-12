@@ -7,7 +7,8 @@ export default function Main(){
     const [stateTime,setStateTime] = useState(0); 
 
     const [finalDate,setFinalDate] = useState(new Date("January 31 1980 00:00:00")); 
-    const [saveStartTime,setSaveStartTime] = useState(''); 
+    
+    const [saveStartTime,setSaveStartTime] = useState(time); 
 
     const [dataTable,setDataTable] = useState([{
         description: 'Start develop the application',
@@ -62,7 +63,6 @@ export default function Main(){
     function play(){
 
         if (stateTime == 0){
-            setSaveStartTime(time); 
             setStateTime(1);
         }else{ 
             setStateTime(0);
@@ -73,6 +73,11 @@ export default function Main(){
     function reload(){
         setTime(saveStartTime);
         setStateTime(0); 
+    }
+
+    function valueOfInput(e){
+        console.log('Value of my input: ', e); 
+        setSaveStartTime(e); 
     }
 
     return (
@@ -88,6 +93,7 @@ export default function Main(){
                 <input 
                     value = { time }
                     onChange = { e => setTime(e.target.value) } 
+                    onBlur = { e => valueOfInput(e.target.value) } 
                 />
                 <button onClick={play} className="play">PLAY/PAUSE</button>
                     
