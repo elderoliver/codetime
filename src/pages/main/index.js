@@ -1,11 +1,13 @@
-import React,{ useState } from 'react'; 
+import React,{ useState,useEffect } from 'react'; 
 import './main.css'; 
 
 export default function Main(){
 
     const [time, setTime] = useState('00:00:10');  
+    const [stateTime,setStateTime] = useState(0); 
 
-    let saveStartTime = ''; 
+    const [finalDate,setFinalDate] = useState(new Date("January 31 1980 00:00:00")); 
+    const [saveStartTime,setSaveStartTime] = useState(''); 
 
     const [dataTable,setDataTable] = useState([{
         description: 'Start develop the application',
@@ -21,16 +23,20 @@ export default function Main(){
         time: '20 min'
     }]);
 
-    function play(){
+    useEffect( () => {
 
+        if (stateTime==0){
+            return
+        }
+
+        let myInterval; 
         var startDate = new Date("January 31 1980 "+time);
-        saveStartTime = time; 
 
-        var finalDate = new Date("January 31 1980 00:00:00");
+        myInterval = setInterval(() => {
 
-        var i = setInterval(function(){
             startDate.setSeconds(startDate.getSeconds() - 1);             
             setTime(startDate.getHours()+":"+startDate.getMinutes()+":"+startDate.getSeconds());
+            
             if(startDate.getTime() == finalDate.getTime()) {
                 
                 const newRow = {
@@ -38,12 +44,35 @@ export default function Main(){
                     date: '06/05/2020 15:44',
                     time: '20 min'
                 }; 
+
                 setDataTable([...dataTable,newRow]); 
                 setTime(saveStartTime); 
-                clearInterval(i);
+                clearInterval(myInterval);
 
-            }
+            } 
+            
         }, 1000);
+
+        return () => {
+            clearInterval(myInterval); 
+        }
+
+    },[stateTime]); 
+
+    function play(){
+
+        if (stateTime == 0){
+            setSaveStartTime(time); 
+            setStateTime(1);
+        }else{ 
+            setStateTime(0);
+        }
+
+    }
+
+    function reload(){
+        setTime(saveStartTime);
+        setStateTime(0); 
     }
 
     return (
@@ -54,16 +83,16 @@ export default function Main(){
                 
                 <h1>CodeTime</h1>
 
-                    <button className="reload">RELOAD</button>
-                    <input 
-                        value = { time }
-                        onChange = { e => setTime(e.target.value) } 
-                    />
-                    <button onClick={play} className="play">>PLAY/PAUSE</button>
-                    
-                    <button className="save">>SAVE</button>
-                
+                <button onClick={reload} className="reload">RELOAD</button>
 
+                <input 
+                    value = { time }
+                    onChange = { e => setTime(e.target.value) } 
+                />
+                <button onClick={play} className="play">PLAY/PAUSE</button>
+                    
+                <button className="save">SAVE</button>
+                
                 <table>
                 
                     <tr>
@@ -73,7 +102,6 @@ export default function Main(){
                     </tr>
 
                     { 
-                        
                         dataTable.map( (dt) => (
                         
                         <tr>
