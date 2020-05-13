@@ -1,4 +1,5 @@
 import React,{ useState,useEffect } from 'react'; 
+import MaterialTable from 'material-table';
 import './main.css'; 
 
 export default function Main(){
@@ -10,7 +11,10 @@ export default function Main(){
     
     const [saveStartTime,setSaveStartTime] = useState(time); 
 
-    const [dataTable,setDataTable] = useState([{
+
+    
+
+    /* const [dataTable,setDataTable] = useState([{
         description: 'Start develop the application',
         date: '06/05/2020 15:44',
         time: '20 min'
@@ -22,7 +26,16 @@ export default function Main(){
         description: 'Start develop the application',
         date: '06/05/2020 15:44',
         time: '20 min'
-    }]);
+    }]); */
+
+    const [dataTable, setDataTable] = React.useState({
+        columns: [
+          { title: 'description', field: 'description' },
+          { title: 'date', field: 'date' },
+          { title: 'time', field: 'time', type: 'numeric' },
+        ],
+        data: [],
+      });
 
     useEffect( () => {
 
@@ -46,7 +59,7 @@ export default function Main(){
                     time: '20 min'
                 }; 
 
-                setDataTable([...dataTable,newRow]); 
+                setDataTable([...dataTable.data,newRow]); 
                 setTime(saveStartTime); 
                 clearInterval(myInterval);
 
@@ -75,6 +88,25 @@ export default function Main(){
         setStateTime(0); 
     }
 
+    function save(){
+
+        const newData = {
+            description: '',
+            date: '',
+            time: ''
+        }; 
+
+        setDataTable((prevState) => {
+            const data = [...prevState.data];
+            data.push(newData);
+            return { ...prevState, data };
+        });
+
+        console.log('Minha tabela', dataTable.data);
+
+        reload(); 
+    }
+
     function valueOfInput(e){
         console.log('Value of my input: ', e); 
         setSaveStartTime(e); 
@@ -97,9 +129,9 @@ export default function Main(){
                 />
                 <button onClick={play} className="play">PLAY/PAUSE</button>
                     
-                <button className="save">SAVE</button>
+                <button onClick={save} className="save">SAVE</button>
                 
-                <table>
+                {/* <table>
                 
                     <tr>
                         <th>Description</th>
@@ -114,12 +146,56 @@ export default function Main(){
                             <td>{ dt.description }</td>
                             <td>{ dt.date }</td>
                             <td>{ dt.time }</td>
+                            <td>Excluir</td>
                         </tr>
 
                         )
                     )}
 
-                </table>
+                </table> */}
+
+                <MaterialTable
+                    title="Editable Example"
+                    columns={dataTable.columns}
+                    data={dataTable.data}
+                    editable={{
+                        onRowAdd: (newData) =>
+                        new Promise((resolve) => {
+                            setTimeout(() => {
+                            resolve();
+                            setDataTable((prevState) => {
+                                const data = [...prevState.data];
+                                data.push(newData);
+                                return { ...prevState, data };
+                            });
+                            }, 600);
+                        }),
+                        onRowUpdate: (newData, oldData) =>
+                        new Promise((resolve) => {
+                            setTimeout(() => {
+                            resolve();
+                            if (oldData) {
+                                setDataTable((prevState) => {
+                                const data = [...prevState.data];
+                                data[data.indexOf(oldData)] = newData;
+                                return { ...prevState, data };
+                                });
+                            }
+                            }, 600);
+                        }),
+                        onRowDelete: (oldData) =>
+                        new Promise((resolve) => {
+                            setTimeout(() => {
+                            resolve();
+                            setDataTable((prevState) => {
+                                const data = [...prevState.data];
+                                data.splice(data.indexOf(oldData), 1);
+                                return { ...prevState, data };
+                            });
+                            }, 600);
+                        }),
+                    }}
+                />
 
             </div>
             

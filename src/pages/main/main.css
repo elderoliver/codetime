@@ -60,12 +60,58 @@ input {
 
 table {
     margin-top: 30px; 
-
 }
 
 td {
     padding: 10px;
 }
+
+.MuiPaper-root {
+    background-color: #282c34 !important;
+    color: #fff !important;
+}
+
+.MuiPaper-elevation2 {
+    box-shadow: none !important;
+}
+
+.MuiTableCell-root {
+    background-color: #282c34 !important;
+    border: 0 !important; 
+    color: #fff !important; 
+}
+
+.MuiTableHead-root {
+    color: #fff !important; 
+}
+
+.MuiTableContainer-root {
+    color: #fff !important; 
+}
+
+.MuiToolbar-root span{
+    color: #fff;
+    font-size: 14px; 
+}
+
+/* input selecao da paginacao */
+.MuiInputBase-root svg{
+    color: #fff;
+}
+
+.MuiInputBase-input {
+    color: #fff !important; 
+}
+
+/* Borda do input filtro */
+.MuiInput-underline {
+  border-bottom: 2px solid #fff;
+}
+
+.MuiTablePagination-root {
+    color: #fff !important;
+}
+
 
 
 
