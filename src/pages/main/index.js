@@ -11,31 +11,14 @@ export default function Main(){
     
     const [saveStartTime,setSaveStartTime] = useState(time); 
 
-
-    
-
-    /* const [dataTable,setDataTable] = useState([{
-        description: 'Start develop the application',
-        date: '06/05/2020 15:44',
-        time: '20 min'
-    },{
-        description: 'Start develop the application',
-        date: '06/05/2020 15:44',
-        time: '20 min'
-    },{
-        description: 'Start develop the application',
-        date: '06/05/2020 15:44',
-        time: '20 min'
-    }]); */
-
     const [dataTable, setDataTable] = React.useState({
         columns: [
           { title: 'description', field: 'description' },
           { title: 'date', field: 'date' },
-          { title: 'time', field: 'time', type: 'numeric' },
+          { title: 'time', field: 'time' },
         ],
         data: [],
-      });
+    });
 
     useEffect( () => {
 
@@ -53,13 +36,22 @@ export default function Main(){
             
             if(startDate.getTime() == finalDate.getTime()) {
                 
-                const newRow = {
-                    description: 'Start develop the application',
+
+                //save(); 
+                const newData = {
+                    description: '',
                     date: '06/05/2020 15:44',
                     time: '20 min'
                 }; 
 
-                setDataTable([...dataTable.data,newRow]); 
+                //setDataTable([...dataTable.data,newRow]); 
+
+                setDataTable((prevState) => {
+                    const data = [...prevState.data];
+                    data.push(newData);
+                    return { ...prevState, data };
+                });
+
                 setTime(saveStartTime); 
                 clearInterval(myInterval);
 
@@ -90,11 +82,21 @@ export default function Main(){
 
     function save(){
 
+        const now = new Date; 
+
         const newData = {
             description: '',
             date: '',
             time: ''
         }; 
+
+        const day = ("0" + (now.getDay() + 1)).slice(-2);
+        const month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+        newData.date = day+'/'+month+'/'+now.getFullYear()+' '+now.getHours()+':'+now.getMinutes(); 
+
+        console.log('saveStartTime: '+saveStartTime,'time: '+time)
+        newData.time = difOfTime(saveStartTime,time); 
 
         setDataTable((prevState) => {
             const data = [...prevState.data];
@@ -110,6 +112,31 @@ export default function Main(){
     function valueOfInput(e){
         console.log('Value of my input: ', e); 
         setSaveStartTime(e); 
+    }
+
+
+    function difOfTime(date1,date2){
+        
+        const dt1 = new Date("January 31 1980 "+date1);
+        const dt2 = new Date("January 31 1980 "+date2);
+
+        let diffTime = Math.abs(dt1 - dt2); 
+        
+        let diffHours = Math.floor(  diffTime / (1000 * 60 * 60) ); 
+        diffHours = ("0" + (diffHours)).slice(-2); 
+
+        diffTime = diffTime - ( diffHours * 1000 * 60 * 60); 
+
+        let diffMinutes = Math.floor(diffTime / (1000 * 60)); 
+        diffMinutes = ("0" + (diffMinutes)).slice(-2); 
+
+        diffTime = diffTime - ( diffMinutes * 1000 * 60 );
+
+        let diffSeconds = Math.floor(diffTime / (1000)); 
+        diffSeconds = ("0" + (diffSeconds)).slice(-2); 
+        
+        return diffHours+':'+diffMinutes+':'+diffSeconds; 
+
     }
 
     return (
