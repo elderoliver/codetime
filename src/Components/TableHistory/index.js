@@ -1,9 +1,7 @@
-import React,{ useState }  from 'react'; 
+import React,{ useState,useEffect }  from 'react'; 
 import MaterialTable from 'material-table';
 
 export default function TableHistory(props) {
-
-    const { newData } = props; 
 
     const [dataTable, setDataTable] = React.useState({
         columns: [
@@ -14,10 +12,22 @@ export default function TableHistory(props) {
         data: [],
     });
 
+    useEffect(() => {
+
+        if (props.newData != null){
+            setDataTable((prevState) => {
+                const data = [...prevState.data];
+                data.push(props.newData);
+                return { ...prevState, data };
+            });
+        }
+        
+    },[props.newData]); 
+
     return (
 
         <MaterialTable
-                    title={ props.name }
+                    title={ '' }
                     columns={dataTable.columns}
                     data={dataTable.data}
                     editable={{

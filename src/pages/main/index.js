@@ -1,5 +1,4 @@
 import React,{ useState,useEffect } from 'react'; 
-
 import TableHistory from '../../Components/TableHistory'; 
 import difOfTime from '../../Utils/difOfTime.js';
 import sysdate from '../../Utils/sysdate.js'; 
@@ -9,19 +8,9 @@ export default function Main(){
 
     const [time, setTime] = useState('00:00:10');  
     const [stateTime,setStateTime] = useState(0); 
-
     const [finalDate,setFinalDate] = useState(new Date("January 31 1980 00:00:00")); 
-    
     const [saveStartTime,setSaveStartTime] = useState(time); 
-
-    const [dataTable, setDataTable] = React.useState({
-        columns: [
-          { title: 'description', field: 'description' },
-          { title: 'date', field: 'date' },
-          { title: 'time', field: 'time' },
-        ],
-        data: [],
-    });
+    const [newData,setNewData] = useState(null); 
 
     useEffect( () => {
 
@@ -38,24 +27,8 @@ export default function Main(){
             setTime(startDate.getHours()+":"+startDate.getMinutes()+":"+startDate.getSeconds());
             
             if(startDate.getTime() == finalDate.getTime()) {
-                
-
-                //save(); 
-                const newData = {
-                    description: '',
-                    date: '06/05/2020 15:44',
-                    time: '20 min'
-                }; 
-
-                setDataTable((prevState) => {
-                    const data = [...prevState.data];
-                    data.push(newData);
-                    return { ...prevState, data };
-                });
-
-                setTime(saveStartTime); 
+                save(); 
                 clearInterval(myInterval);
-
             } 
             
         }, 1000);
@@ -76,11 +49,6 @@ export default function Main(){
 
     }
 
-    function reload(){
-        setTime(saveStartTime);
-        setStateTime(0); 
-    }
-
     function save(){
 
         const newData = {
@@ -91,20 +59,16 @@ export default function Main(){
 
         newData.date = sysdate(); 
         newData.time = difOfTime(saveStartTime,time); 
-
-        setDataTable((prevState) => {
-            const data = [...prevState.data];
-            data.push(newData);
-            return { ...prevState, data };
-        });
-
-        console.log('Minha tabela', dataTable.data);
-
+        setNewData(newData);
         reload(); 
     }
 
+    function reload(){
+        setTime(saveStartTime);
+        setStateTime(0); 
+    }
+
     function valueOfInput(e){
-        console.log('Value of my input: ', e); 
         setSaveStartTime(e); 
     }
 
@@ -128,7 +92,7 @@ export default function Main(){
                 <button onClick={save} className="save">SAVE</button>
 
                 <TableHistory 
-                    name='Elder'
+                    newData={ newData }
                 />
                 
             </div>
