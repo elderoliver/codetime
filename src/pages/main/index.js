@@ -2,7 +2,7 @@ import React,{ useState,useEffect } from 'react';
 import TableHistory from '../../Components/TableHistory'; 
 import difOfTime from '../../Utils/difOfTime.js';
 import sysdate from '../../Utils/sysdate.js'; 
-import './main.css'; 
+import './style.css'; 
 
 export default function Main(){
 
@@ -27,7 +27,7 @@ export default function Main(){
             setTime(startDate.getHours()+":"+startDate.getMinutes()+":"+startDate.getSeconds());
             
             if(startDate.getTime() == finalDate.getTime()) {
-                save(); 
+                save(true); 
                 clearInterval(myInterval);
             } 
             
@@ -49,7 +49,7 @@ export default function Main(){
 
     }
 
-    function save(){
+    function save(finalTime){
 
         const newData = {
             description: '',
@@ -58,7 +58,14 @@ export default function Main(){
         }; 
 
         newData.date = sysdate(); 
-        newData.time = difOfTime(saveStartTime,time); 
+        console.log('Parameters of difOfTime: ',saveStartTime,time); 
+        
+        if (finalTime == true) {
+            newData.time = difOfTime(saveStartTime,'00:00:00');
+        }else {
+            newData.time = difOfTime(saveStartTime,time);
+        }
+        
         setNewData(newData);
         reload(); 
     }
@@ -74,29 +81,29 @@ export default function Main(){
 
     return (
 
-        <section>
+        <main>
 
-            <div>
+            
                 
-                <h1>CodeTime</h1>
-
+            <h1>CodeTime</h1>
+            
+            <form>
                 <button onClick={reload} className="reload">RELOAD</button>
-
                 <input 
                     value = { time }
                     onChange = { e => setTime(e.target.value) } 
                     onBlur = { e => valueOfInput(e.target.value) } 
                 />
                 <button onClick={play} className="play">PLAY/PAUSE</button>
-                    
                 <button onClick={save} className="save">SAVE</button>
-
-                <TableHistory 
-                    newData={ newData }
-                />
-                
-            </div>
+            </form>
             
-        </section>
+            <TableHistory 
+                newData={ newData }
+            />
+                
+            
+            
+        </main>
     ); 
 }
