@@ -1,50 +1,37 @@
 main {
-    margin: 50px auto; 
-    width: 940px; 
+    margin: 0px auto; 
+    width: 100%; 
+    max-width: 900px;
+    height: 100vh;
 }
 
-
-h1 {
-    padding: 30px 0;
-    font-size: 38px;
-    text-transform: uppercase;
-    text-align: center;
+section {
+    display: flex; 
+    justify-content: space-around;
+    height: 10%;
 }
 
-button {
-    background-repeat: no-repeat;
-    color: transparent;
-    background-color: #2980b9;
-    text-decoration: none;
-    border: 0; 
-    height: 40px;
-    width: 40px;
-    margin-right: 3px; 
-    padding: 4px;
-    background-position: 3px;
-    border-radius: 5px;
+section button {
+    width: 15%;  
+    font-size: 48px;
 }
 
-.play {
-    background-image: url("../../assets/play.png");
-}
-
-.reload {
-    background-image: url("../../assets/reload.png");        
-}
-
-.save {
-    background-image: url("../../assets/save.png"); 
-}
-
-input {
-    display: inline-block; 
+section input {
+    width: 35%;  
     padding: 15px 0; 
     text-align: center;
     font-weight: bold;
     border-radius: 5px;
     margin-right: 3px;
     color: red; 
+    font-size: 48px;
+}
+
+h1 {
+    padding: 30px 0;
+    font-size: 38px;
+    text-transform: uppercase;
+    text-align: center;
 }
 
 table {
@@ -102,9 +89,33 @@ td {
 }
 
 
+/* Old classes */
 
+/* button {
+    background-repeat: no-repeat;
+    color: transparent;
+    background-color: #2980b9;
+    text-decoration: none;
+    border: 0; 
+    height: 40px;
+    width: 40px;
+    margin-right: 3px; 
+    padding: 4px;
+    background-position: 3px;
+    border-radius: 5px;
+} */
 
+/* .play {
+    background-image: url("../../assets/play.png");
+}
 
+.reload {
+    background-image: url("../../assets/reload.png");        
+}
+
+.save {
+    background-image: url("../../assets/save.png"); 
+} */
 
 
 

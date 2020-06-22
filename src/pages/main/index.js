@@ -4,6 +4,10 @@ import difOfTime from '../../Utils/difOfTime.js';
 import sysdate from '../../Utils/sysdate.js'; 
 import './style.css'; 
 
+import { FiSave } from 'react-icons/fi';
+import { FiPlay } from 'react-icons/fi'; 
+import { FiRefreshCcw } from 'react-icons/fi'; 
+
 export default function Main(){
 
     const [time, setTime] = useState('00:00:10');  
@@ -40,7 +44,7 @@ export default function Main(){
     },[stateTime]); 
 
     function play(){
-
+        console.log('tap play'); 
         if (stateTime == 0){
             setStateTime(1);
         }else{ 
@@ -82,28 +86,43 @@ export default function Main(){
     return (
 
         <main>
-
-            
-                
+ 
             <h1>CodeTime</h1>
             
-            <form>
-                <button onClick={reload} className="reload">RELOAD</button>
+            <section>
+                
+                <button 
+                    onClick={reload} 
+                    className="reload"
+                >
+                    <FiRefreshCcw />
+                </button>
+
                 <input 
-                    value = { time }
+                    value = {time}
                     onChange = { e => setTime(e.target.value) } 
                     onBlur = { e => valueOfInput(e.target.value) } 
                 />
-                <button onClick={play} className="play">PLAY/PAUSE</button>
-                <button onClick={save} className="save">SAVE</button>
-            </form>
+                
+                <button 
+                    onClick={play} 
+                    className="play">
+                    <FiPlay />
+                </button>
+                
+                <button 
+                    onClick={save} 
+                    className="save">
+                    <FiSave />
+                </button>
+
+            </section>
             
             <TableHistory 
                 newData={ newData }
             />
                 
-            
-            
         </main>
+
     ); 
 }
