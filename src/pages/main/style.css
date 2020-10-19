@@ -1,22 +1,50 @@
-main {
+
+
+.header__codetime {
+    display: flex;
+    width: 100%;
+    padding: 30px 0;
+    align-items: center;
+    justify-content: space-around;
+    max-width: 900px;
+    margin: 0px auto; 
+}
+
+.header__codetime_title {
+    font-size: 80px;
+    color: black;
+}
+
+.header__codetime__logo {
+    width: 150px;
+}
+
+.content{
     margin: 0px auto; 
     width: 100%; 
     max-width: 900px;
-    height: 100vh;
+
 }
 
-section {
+.content__timer {
     display: flex; 
     justify-content: space-around;
     height: 10%;
 }
 
-section button {
+.content__timer___button__action {
     width: 15%;  
-    font-size: 48px;
+    font-size: 36px;
+    background: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+    padding-top: 8px;
+    border: black 3px solid;
+    border-radius: 10px;
 }
 
-section input {
+.content__timer___button__input {
     width: 35%;  
     padding: 15px 0; 
     text-align: center;
@@ -25,6 +53,9 @@ section input {
     margin-right: 3px;
     color: red; 
     font-size: 48px;
+    background: transparent;
+    border: none;
+    border: black 3px solid;
 }
 
 h1 {
@@ -34,88 +65,65 @@ h1 {
     text-align: center;
 }
 
-table {
-    margin-top: 30px; 
-}
-
-td {
-    padding: 10px;
-}
-
-.MuiPaper-root {
-    background-color: #282c34 !important;
-    color: #fff !important;
-}
-
-.MuiPaper-elevation2 {
-    box-shadow: none !important;
-}
-
-.MuiTableCell-root {
-    background-color: #282c34 !important;
-    border: 0 !important; 
-    color: #fff !important; 
-}
-
-.MuiTableHead-root {
-    color: #fff !important; 
-}
-
-.MuiTableContainer-root {
-    color: #fff !important; 
-}
-
-.MuiToolbar-root span{
-    color: #fff;
-    font-size: 14px; 
-}
-
-/* input selecao da paginacao */
-.MuiInputBase-root svg{
-    color: #fff;
-}
-
-.MuiInputBase-input {
-    color: #fff !important; 
-}
-
-/* Borda do input filtro */
-.MuiInput-underline {
-  border-bottom: 2px solid #fff;
-}
-
-.MuiTablePagination-root {
-    color: #fff !important;
-}
-
-
-/* Old classes */
-
-/* button {
-    background-repeat: no-repeat;
-    color: transparent;
-    background-color: #2980b9;
-    text-decoration: none;
-    border: 0; 
-    height: 40px;
-    width: 40px;
-    margin-right: 3px; 
-    padding: 4px;
-    background-position: 3px;
+.list__assignments {
+    border: 3px solid black;
     border-radius: 5px;
-} */
-
-/* .play {
-    background-image: url("../../assets/play.png");
+    width: 80%;
+    margin: 0 auto; 
+    margin-top: 30px;
+    padding: 15px;
+    overflow: auto;
+    height: 150px;
 }
 
-.reload {
-    background-image: url("../../assets/reload.png");        
+.list__assignments___item {
+    display: flex; 
+    height: 35px;
+    cursor: pointer;
+    color: black;
 }
 
-.save {
-    background-image: url("../../assets/save.png"); 
-} */
+.list__assignments___item:hover {
+    background: gray;
+    color: white;
+}
+
+.list__assignments___item div {
+    margin-right: 10px;
+    display: flex;
+}
+
+.list__assignments___item div svg {
+    font-size: 20px;
+    margin-right: 5px;
+    line-height: 35px;
+    margin-top: 5px;
+    padding-left: 10px;
+}
+
+.list__assignments___item div p {
+    line-height: 35px;
+}
+
+
+@media (max-width: 700px) {
+    .header__codetime {
+        flex-direction: column-reverse;
+    }
+
+    .content__timer___button__input {
+        font-size: 24px;
+    }
+
+    .header__codetime_title {
+        font-size: 65px;
+    }
+
+    .list__assignments {
+        width: 90%;
+    }
+    
+}
 
 
 

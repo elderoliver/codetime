@@ -5,9 +5,9 @@ export default function TableHistory(props) {
 
     const [dataTable, setDataTable] = React.useState({
         columns: [
-          { title: 'description', field: 'description' },
-          { title: 'date', field: 'date' },
-          { title: 'time', field: 'time' },
+          { title: 'Description', field: 'description' },
+          { title: 'Date', field: 'date' },
+          { title: 'Time', field: 'time' },
         ],
         data: [],
     });
